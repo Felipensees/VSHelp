@@ -1,59 +1,62 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+<div align="center">
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+# VSHelp
+
+### Sistema de gerenciamento de chamados e ocorrências internas
+
+<p>
+  <img src="https://img.shields.io/badge/Laravel-12-red" alt="Laravel 12">
+  <img src="https://img.shields.io/badge/PHP-8.2%2B-blue" alt="PHP 8.2+">
+  <img src="https://img.shields.io/badge/MySQL-Database-orange" alt="MySQL">
+  <img src="https://img.shields.io/badge/Status-Em%20desenvolvimento-yellow" alt="Status">
 </p>
 
-## About Laravel
+</div>
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 📋 Sobre o VSHelp
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+O **VSHelp** é um sistema desenvolvido para auxiliar no gerenciamento de chamados, ocorrências e demandas internas da empresa, proporcionando maior organização, rastreabilidade e visibilidade sobre o trabalho realizado entre os setores.
 
-## Learning Laravel
+Inicialmente, o sistema será utilizado pelos setores de **Qualidade, Pré-Montagem e Montagem**, com possibilidade de expansão para outras áreas conforme a evolução e as necessidades da empresa.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+A proposta do VSHelp é transformar problemas, solicitações e retrabalhos que anteriormente poderiam ficar registrados apenas em conversas ou controles individuais em **informações organizadas, rastreáveis e mensuráveis**.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+---
 
-## Laravel Sponsors
+## 🔄 Como funciona
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+O fluxo do VSHelp foi desenvolvido para acompanhar uma ocorrência desde sua identificação até sua resolução, mantendo o histórico da demanda e permitindo analisar o impacto gerado no processo.
 
-### Premium Partners
+### Exemplo prático
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+> 💡 **Situação:** durante a inspeção de um totem, a equipe de Qualidade identifica que o touch screen apresenta uma falha e precisa ser substituído.
 
-## Contributing
+| Etapa | Descrição |
+|---|---|
+| 🔎 Identificação | A Qualidade identifica a ocorrência durante a inspeção. |
+| 📝 Abertura | O problema é registrado no VSHelp. |
+| 👷 Encaminhamento | A demanda é direcionada ao setor responsável. |
+| 🔧 Atendimento | O setor realiza a correção necessária. |
+| ✅ Conclusão | Após a resolução, o chamado é finalizado. |
+| 📊 Análise | As informações ficam registradas para acompanhamento e geração de métricas. |
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### Fluxo
 
-## Code of Conduct
+**Identificação** → **Abertura** → **Encaminhamento** → **Atendimento** → **Conclusão** → **Análise**
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+---
 
-## Security Vulnerabilities
+## 🛠️ Tecnologias utilizadas
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+O VSHelp foi desenvolvido utilizando tecnologias voltadas para aplicações web, buscando manter uma estrutura organizada, segura e de fácil manutenção.
 
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+| Tecnologia | Utilização |
+|---|---|
+| **Laravel 12** | Framework principal utilizado no desenvolvimento do sistema. |
+| **PHP 8.2+** | Linguagem de programação utilizada no backend da aplicação. |
+| **MySQL** | Banco de dados responsável pelo armazenamento das informações do sistema. |
+| **Blade** | Engine de templates utilizada na construção das interfaces da aplicação. |
+| **Git** | Sistema de controle de versão utilizado para acompanhar as alterações do projeto. |
+| **GitHub** | Plataforma utilizada para hospedagem do código e colaboração no desenvolvimento. |
