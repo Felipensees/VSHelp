@@ -9,6 +9,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Models\Sector;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class User extends Authenticatable
 {
@@ -26,7 +27,8 @@ class User extends Authenticatable
         'password',
         'role',
         'sector_id',
-        'must_change_password'
+        'must_change_password',
+        'active'
     ];
 
     /**
@@ -55,5 +57,21 @@ class User extends Authenticatable
     public function sector(): BelongsTo
     {
         return $this->belongsTo(Sector::class);
+    }
+
+    public function createdOccurrences(): HasMany
+    {
+        return $this->hasMany(
+            Occurrence::class,
+            'created_by'
+        );
+    }
+
+    public function assignedOccurrences(): HasMany
+    {
+        return $this->hasMany(
+            Occurrence::class,
+            'assigned_user_id'
+        );
     }
 }
