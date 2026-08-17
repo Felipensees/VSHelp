@@ -17,8 +17,9 @@ class SuperAdminSeeder extends Seeder
             'name' => 'Super Admin',
             'email' => 'admin@vshelp.com',
             'password' => 'Admin@123',
-            'role' => 'super-admin',
-            'sector_id' => null
+            'role' => 'super_admin',
+            'sector_id' => null,
+            'must_change_password' => false,
         ]);
     }
 }

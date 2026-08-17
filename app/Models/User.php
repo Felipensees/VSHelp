@@ -7,6 +7,8 @@ use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use App\Models\Sector;
 
 class User extends Authenticatable
 {
@@ -23,7 +25,8 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
-        'sector_id'
+        'sector_id',
+        'must_change_password'
     ];
 
     /**
@@ -47,5 +50,10 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function sector(): BelongsTo
+    {
+        return $this->belongsTo(Sector::class);
     }
 }
