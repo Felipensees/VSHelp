@@ -1,3 +1,28 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.password-toggle-wrapper {
+    position: relative;
+}
+
+.password-toggle-wrapper input {
+    padding-right: 2.75rem;
+}
+
+.password-toggle-btn {
+    position: absolute;
+    top: 50%;
+    left: auto;
+    right: 0.75rem;
+    transform: translateY(-50%);
+    z-index: 10;
+}
+
+.password-toggle-btn svg {
+    pointer-events: none;
+}
+
+.password-toggle-wrapper {
+    direction: ltr;
+}
