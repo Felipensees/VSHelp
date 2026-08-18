@@ -60,3 +60,84 @@ O VSHelp foi desenvolvido utilizando tecnologias voltadas para aplicações web,
 | **Blade** | Engine de templates utilizada na construção das interfaces da aplicação. |
 | **Git** | Sistema de controle de versão utilizado para acompanhar as alterações do projeto. |
 | **GitHub** | Plataforma utilizada para hospedagem do código e colaboração no desenvolvimento. |
+
+## Instalação
+
+Após clonar o repositório, certifique-se de que o ambiente possui todos os requisitos necessários. Em seguida, siga os passos abaixo.
+
+### Dependências e configuração
+
+1. Instalar as dependências do projeto:
+
+```bash
+composer install
+```
+
+2. Criar o arquivo `.env` com base no arquivo `.env.example`:
+
+```bash
+copy .env.example .env
+```
+
+3. Configurar no arquivo `.env` as informações de conexão com o banco de dados MySQL.
+
+4. Gerar a chave da aplicação:
+
+```bash
+php artisan key:generate
+```
+
+5. Executar as migrations do banco de dados:
+
+```bash
+php artisan migrate
+```
+
+6. Executar o seeder para inserir os dados iniciais:
+
+```bash
+php artisan db:seed
+```
+
+7. Instalar as dependências do front-end:
+
+```bash
+npm install
+```
+
+### Execução em ambiente de desenvolvimento
+
+Para iniciar o sistema em ambiente de desenvolvimento:
+
+1. Executar o servidor Laravel:
+
+```bash
+php artisan serve
+```
+
+2. Em outro terminal, executar o front-end:
+
+```bash
+npm run dev
+```
+
+3. Acessar o sistema pelo endereço:
+
+```text
+http://localhost:8000
+```
+
+### Configuração do `.env`
+
+No arquivo `.env`, configure principalmente os dados de conexão com o banco de dados MySQL:
+
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=nome_do_banco
+DB_USERNAME=usuario
+DB_PASSWORD=senha
+```
+
+Substitua os valores de `DB_DATABASE`, `DB_USERNAME` e `DB_PASSWORD` de acordo com a configuração do ambiente.
