@@ -15,16 +15,10 @@ return new class extends Migration
             $table->id();
 
             $table->string('title');
-
             $table->text('description');
-
-            $table->foreignId('totem_model_id')
-                ->constrained('totem_models');
-
+            $table->foreignId('totem_model_id');
             $table->string('order_number');
-
             $table->string('serial_number');
-
             $table->foreignId('created_by')
                 ->constrained('users');
 
@@ -36,10 +30,10 @@ return new class extends Migration
                 ->constrained('users')
                 ->nullOnDelete();
 
-            $table->string('priority')
+            $table->enum('priority', ['low', 'medium', 'high', 'critical'])
                 ->default('medium');
 
-            $table->string('status')
+            $table->enum('status', ['open', 'in_progress', 'resolved', 'closed'])
                 ->default('open');
 
             $table->timestamps();

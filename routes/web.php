@@ -5,10 +5,12 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SectorController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\FirstLoginPasswordController;
+use App\Http\Controllers\OccurrenceController;
 
 Route::get('/', function () {
     return view('welcome');
 });
+
 
 Route::middleware('auth')->group(function () {
 
@@ -31,6 +33,10 @@ Route::get('/dashboard', function () {
     'verified',
     'password.changed',
 ])->name('dashboard');
+
+Route::middleware(['auth', 'password.changed'])->group(function () {
+    Route::resource('/occurrences', OccurrenceController::class);
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Occurrence extends Model
 {
@@ -32,10 +33,5 @@ class Occurrence extends Model
     public function assignedUser(): BelongsTo
     {
         return $this->belongsTo(User::class, 'assigned_user_id');
-    }
-
-    public function totemModel(): BelongsTo
-    {
-        return $this->belongsTo(TotemModel::class);
     }
 }
