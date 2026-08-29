@@ -1,17 +1,18 @@
 <x-app-layout>
 
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        <p class="text-sm font-semibold uppercase tracking-widest text-indigo-600">Inspeções</p>
+        <h2 class="mt-1 text-2xl font-bold text-slate-900">
             Novo Totem
         </h2>
     </x-slot>
 
-    <div class="py-12">
+    <div class="py-10 sm:py-14">
         <div class="max-w-3xl mx-auto sm:px-6 lg:px-8">
 
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="overflow-hidden border border-slate-200 bg-white shadow-sm sm:rounded-2xl">
 
-                <div class="p-6">
+                <div class="p-6 sm:p-8">
 
                     <h3 class="text-lg font-semibold text-gray-900">
                         Identificação do Totem
@@ -41,7 +42,8 @@
                                 name="order_number"
                                 value="{{ old('order_number') }}"
                                 required
-                                class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                            placeholder="Ex.: 123456"
+                            class="w-full rounded-lg border-slate-300 px-4 py-3 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                             >
 
                             @error('order_number')
@@ -65,7 +67,8 @@
                                 name="serial_number"
                                 value="{{ old('serial_number') }}"
                                 required
-                                class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                            placeholder="Ex.: VS-000123"
+                            class="w-full rounded-lg border-slate-300 px-4 py-3 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                             >
 
                             @error('serial_number')
@@ -79,14 +82,14 @@
 
                             <a
                                 href="{{ route('totem-inspections.index') }}"
-                                class="px-4 py-2 border border-gray-300 rounded-md text-gray-700"
+                                class="rounded-lg border border-slate-300 px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
                             >
                                 Cancelar
                             </a>
 
                             <button
                                 type="submit"
-                                class="px-5 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
+                                class="rounded-lg bg-indigo-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                             >
                                 Iniciar inspeção
                             </button>

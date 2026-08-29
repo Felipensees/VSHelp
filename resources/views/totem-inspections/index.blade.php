@@ -4,7 +4,8 @@
         <div class="flex items-center justify-between">
 
             <div>
-                <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                <p class="text-sm font-semibold uppercase tracking-widest text-indigo-600">Inspeções</p>
+                <h2 class="mt-1 text-2xl font-bold text-slate-900">
                     Inspeções de Totens
                 </h2>
 
@@ -19,26 +20,27 @@
 
             <a
                 href="{{ route('totem-inspections.create') }}"
-                class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
+                class="inline-flex items-center gap-2 rounded-lg bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
             >
-                Novo Totem
+                <span class="text-lg leading-none">+</span> Novo Totem
             </a>
 
         </div>
     </x-slot>
 
 
-    <div class="py-12">
+    <div class="py-10 sm:py-14">
 
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 
-            <div class="bg-white shadow-sm sm:rounded-lg overflow-hidden">
+            <div class="overflow-hidden border border-slate-200 bg-white shadow-sm sm:rounded-2xl">
 
                 @if ($totemInspections->isEmpty())
 
-                    <div class="p-8 text-center">
-
-                        <p class="text-gray-500">
+                    <div class="px-6 py-16 text-center">
+                        <div class="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-indigo-50 text-2xl text-indigo-600">▣</div>
+                        <h3 class="mt-4 font-semibold text-slate-900">Nenhuma inspeção encontrada</h3>
+                        <p class="mt-1 text-sm text-slate-500">
                             Nenhuma inspeção cadastrada.
                         </p>
 
@@ -50,7 +52,7 @@
 
                         <table class="min-w-full divide-y divide-gray-200">
 
-                            <thead class="bg-gray-50">
+                            <thead class="bg-slate-50">
 
                                 <tr>
 
@@ -95,7 +97,7 @@
 
                                 @foreach ($totemInspections as $inspection)
 
-                                    <tr>
+                                    <tr class="transition hover:bg-slate-50/80">
 
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                             #{{ $inspection->id }}
@@ -159,7 +161,7 @@
 
                                             <a
                                                 href="{{ route('totem-inspections.show', $inspection) }}"
-                                                class="text-indigo-600 hover:text-indigo-900 text-sm font-medium"
+                                                class="inline-flex rounded-lg bg-indigo-50 px-3 py-1.5 text-sm font-semibold text-indigo-700 transition hover:bg-indigo-100"
                                             >
                                                 Visualizar
                                             </a>

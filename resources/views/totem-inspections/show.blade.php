@@ -3,7 +3,8 @@
     <x-slot name="header">
         <div class="flex items-center justify-between">
             <div>
-                <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                <p class="text-sm font-semibold uppercase tracking-widest text-indigo-600">Checklist</p>
+                <h2 class="mt-1 text-2xl font-bold text-slate-900">
                     Inspeção do Totem
                 </h2>
 
@@ -15,18 +16,18 @@
             </div>
             <a
                 href="{{ route('totem-inspections.index') }}"
-                class="text-sm text-gray-600 hover:text-gray-900">
-                Voltar
+                class="inline-flex rounded-lg border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-50">
+                ← Voltar
             </a>
 
         </div>
     </x-slot>
 
-    <div class="py-12">
+    <div class="py-10 sm:py-14">
 
         <div class="max-w-5xl mx-auto sm:px-6 lg:px-8 space-y-6">
             {{-- Informações --}}
-            <div class="bg-white shadow-sm sm:rounded-lg">
+            <div class="overflow-hidden border border-slate-200 bg-white shadow-sm sm:rounded-2xl">
                 @if (session('success'))
                 <div class="bg-green-50 border border-green-200 text-green-800 px-4 py-3 rounded-lg">
                     {{ session('success') }}
@@ -39,7 +40,7 @@
                 </div>
                 @endif
 
-                <div class="p-6">
+                <div class="p-6 sm:p-8">
 
                     <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
                         <div>
@@ -102,9 +103,9 @@
 
 
             {{-- Checklist --}}
-            <div class="bg-white shadow-sm sm:rounded-lg">
+            <div class="overflow-hidden border border-slate-200 bg-white shadow-sm sm:rounded-2xl">
 
-                <div class="p-6">
+                <div class="p-6 sm:p-8">
 
                     <div class="mb-8">
 
@@ -129,9 +130,9 @@
 
                             @foreach ($sections as $section)
 
-                            <div>
+                            <div class="rounded-xl border border-slate-200 p-5 sm:p-6">
 
-                                <div class="border-b border-gray-200 pb-2 mb-4">
+                                <div class="border-b border-slate-200 pb-3 mb-2">
 
                                     <h4 class="font-semibold text-gray-900">
                                         {{ $section->name }}
@@ -145,7 +146,7 @@
                                     @foreach ($section->items as $item)
 
                                     <div
-                                        class="py-4 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                                        class="py-4 flex flex-col md:flex-row md:items-center md:justify-between gap-4 transition hover:bg-slate-50">
 
                                         <div>
 
@@ -204,7 +205,7 @@
                                 type="submit"
                                 name="action"
                                 value="draft"
-                                class="px-5 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50">
+                                class="rounded-lg border border-slate-300 px-5 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50">
                                 Salvar rascunho
                             </button>
 
@@ -213,7 +214,7 @@
                                 name="action"
                                 value="finalize"
                                 onclick="return confirm('Tem certeza que deseja finalizar esta inspeção? Depois disso ela não poderá mais ser alterada por você.')"
-                                class="px-5 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700">
+                                class="rounded-lg bg-indigo-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-indigo-700">
                                 Finalizar inspeção
                             </button>
 
@@ -223,7 +224,7 @@
                                 type="submit"
                                 name="action"
                                 value="draft"
-                                class="px-5 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50">
+                                class="rounded-lg border border-slate-300 px-5 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50">
                                 Salvar alterações
                             </button>
 

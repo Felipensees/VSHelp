@@ -34,6 +34,14 @@ Route::get('/dashboard', function () {
     'password.changed',
 ])->name('dashboard');
 
+Route::get('/ocorrencias', function () {
+    return view('occurrences.index');
+})->middleware([
+    'auth',
+    'verified',
+    'password.changed',
+])->name('occurrences.index');
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
