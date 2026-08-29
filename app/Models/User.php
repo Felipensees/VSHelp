@@ -9,6 +9,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Models\Sector;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class User extends Authenticatable
 {
@@ -56,4 +57,9 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Sector::class);
     }
+
+    public function totemInspections(): HasMany
+{
+    return $this->hasMany(TotemInspection::class, 'created_by');
+}
 }

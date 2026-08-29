@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SectorController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\FirstLoginPasswordController;
+use App\Http\Controllers\TotemInspectionController;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -50,5 +52,29 @@ Route::middleware(['auth', 'password.changed', 'superadmin'])->group(function ()
 
     Route::resource('/admin/users', UserController::class)
         ->except(['show']);
+});
+
+Route::middleware(['auth', 'password.changed'])->group(function () {
+    Route::get('/totens', [TotemInspectionController::class, 'index'])
+        ->name('totem-inspections.index');
+
+    Route::get('/totens/novo', [TotemInspectionController::class, 'create'])
+        ->name('totem-inspections.create');
+
+    Route::post('/totens', [TotemInspectionController::class, 'store'])
+        ->name('totem-inspections.store');
+
+    Route::get('/totens/{totemInspection}', [TotemInspectionController::class, 'show'])
+        ->name('totem-inspections.show');
+    
+    Route::put(
+    '/totens/{totemInspection}',
+    [TotemInspectionController::class, 'update']
+    )->name('totem-inspections.update');
+
+    Route::patch(
+    '/totens/{totemInspection}/finalizar',
+    [TotemInspectionController::class, 'finalize']
+    )->name('totem-inspections.finalize');
 });
 require __DIR__.'/auth.php';
