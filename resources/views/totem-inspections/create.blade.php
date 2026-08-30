@@ -42,7 +42,7 @@
                                 name="order_number"
                                 value="{{ old('order_number') }}"
                                 required
-                            placeholder="Ex.: 123456"
+                            placeholder="Ex.: 0123"
                             class="w-full rounded-lg border-slate-300 px-4 py-3 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                             >
 
@@ -67,7 +67,7 @@
                                 name="serial_number"
                                 value="{{ old('serial_number') }}"
                                 required
-                            placeholder="Ex.: VS-000123"
+                            placeholder="Ex.: 12345"
                             class="w-full rounded-lg border-slate-300 px-4 py-3 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                             >
 

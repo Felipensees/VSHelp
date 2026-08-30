@@ -19,22 +19,21 @@
 
                         <a
                             href="{{ route('users.create') }}"
-                            class="px-4 py-2 bg-blue-600 text-white rounded"
-                        >
+                            class="px-4 py-2 bg-blue-600 text-white rounded">
                             Novo usuário
                         </a>
                     </div>
 
                     @if (session('success'))
-                        <div class="mb-4 p-4 bg-green-100 text-green-800 rounded">
-                            {{ session('success') }}
-                        </div>
+                    <div class="mb-4 p-4 bg-green-100 text-green-800 rounded">
+                        {{ session('success') }}
+                    </div>
                     @endif
 
                     @if (session('error'))
-                        <div class="mb-4 p-4 bg-red-100 text-red-800 rounded">
-                            {{ session('error') }}
-                        </div>
+                    <div class="mb-4 p-4 bg-red-100 text-red-800 rounded">
+                        {{ session('error') }}
+                    </div>
                     @endif
 
                     <table class="w-full">
@@ -45,6 +44,7 @@
                                 <th class="text-left p-3">E-mail</th>
                                 <th class="text-left p-3">Setor</th>
                                 <th class="text-left p-3">Perfil</th>
+                                <th class="text-left p-3">Status</th>
                                 <th class="text-right p-3">Ações</th>
                             </tr>
                         </thead>
@@ -53,70 +53,77 @@
 
                             @forelse ($users as $user)
 
-                                <tr class="border-b">
+                            <tr class="border-b">
 
-                                    <td class="p-3">
-                                        {{ $user->name }}
-                                    </td>
+                                <td class="p-3">
+                                    {{ $user->name }}
+                                </td>
 
-                                    <td class="p-3">
-                                        {{ $user->email }}
-                                    </td>
+                                <td class="p-3">
+                                    {{ $user->email }}
+                                </td>
 
-                                    <td class="p-3">
-                                        {{ $user->sector?->name ?? '-' }}
-                                    </td>
+                                <td class="p-3">
+                                    {{ $user->sector?->name ?? '-' }}
+                                </td>
 
-                                    <td class="p-3">
-                                        {{ $user->role === 'super_admin' ? 'Super Admin' : 'Usuário' }}
-                                    </td>
+                                <td class="p-3">
+                                    {{ $user->role === 'super_admin' ? 'Super Admin' : 'Usuário' }}
+                                </td>
+                                <td class="p-3">
+                                    @if ($user->active)
+                                    <span class="text-green-600 font-medium">
+                                        Ativo
+                                    </span>
+                                    @else
+                                    <span class="text-red-600 font-medium">
+                                        Inativo
+                                    </span>
+                                    @endif
+                                </td>
+                                <td class="p-3">
 
-                                    <td class="p-3">
+                                    <div class="flex justify-end gap-3">
 
-                                        <div class="flex justify-end gap-3">
+                                        <a
+                                            href="{{ route('users.edit', $user) }}"
+                                            class="text-blue-600 hover:underline">
+                                            Editar
+                                        </a>
 
-                                            <a
-                                                href="{{ route('users.edit', $user) }}"
-                                                class="text-blue-600 hover:underline"
-                                            >
-                                                Editar
-                                            </a>
+                                        @if ($user->id !== auth()->id())
 
-                                            @if ($user->id !== auth()->id())
+                                        <form
+                                            method="POST"
+                                            action="{{ route('users.destroy', $user) }}"
+                                            onsubmit="return confirm('Deseja realmente excluir este usuário?')">
 
-                                                <form
-                                                    method="POST"
-                                                    action="{{ route('users.destroy', $user) }}"
-                                                    onsubmit="return confirm('Deseja realmente excluir este usuário?')"
-                                                >
+                                            @csrf
+                                            @method('DELETE')
 
-                                                    @csrf
-                                                    @method('DELETE')
+                                            <button
+                                                type="submit"
+                                                class="text-red-600 hover:underline">
+                                                Excluir
+                                            </button>
 
-                                                    <button
-                                                        type="submit"
-                                                        class="text-red-600 hover:underline"
-                                                    >
-                                                        Excluir
-                                                    </button>
+                                        </form>
 
-                                                </form>
+                                        @endif
 
-                                            @endif
+                                    </div>
 
-                                        </div>
+                                </td>
 
-                                    </td>
-
-                                </tr>
+                            </tr>
 
                             @empty
 
-                                <tr>
-                                    <td colspan="5" class="p-6 text-center">
-                                        Nenhum usuário cadastrado.
-                                    </td>
-                                </tr>
+                            <tr>
+                                <td colspan="5" class="p-6 text-center">
+                                    Nenhum usuário cadastrado.
+                                </td>
+                            </tr>
 
                             @endforelse
 

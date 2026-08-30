@@ -40,7 +40,7 @@ class UserController extends Controller
                 'nullable',
                 'exists:sectors,id',
             ],
-            
+
         ]);
 
         User::create([
@@ -83,6 +83,7 @@ class UserController extends Controller
                 'nullable',
                 'exists:sectors,id',
             ],
+            'active' => ['nullable', 'boolean'],
         ]);
 
         $user->name = $validated['name'];
@@ -94,6 +95,12 @@ class UserController extends Controller
             $user->password = Hash::make($validated['password']);
         }
 
+        if ($user->id === auth()->id() && ! $request->boolean('active')) {
+            return back()
+                ->withInput()
+                ->with('error', 'Você não pode desativar o próprio usuário.');
+        }
+        $user->active = $request->boolean('active');
         $user->save();
 
         return redirect()

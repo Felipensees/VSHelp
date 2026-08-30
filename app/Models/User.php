@@ -27,7 +27,8 @@ class User extends Authenticatable
         'password',
         'role',
         'sector_id',
-        'must_change_password'
+        'must_change_password',
+        'active'
     ];
 
     /**
@@ -50,6 +51,8 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'active' => 'boolean',
+            'must_change_password' => 'boolean',
         ];
     }
 
@@ -62,4 +65,20 @@ class User extends Authenticatable
 {
     return $this->hasMany(TotemInspection::class, 'created_by');
 }
+
+    public function createdOccurrences(): HasMany
+    {
+        return $this->hasMany(
+            Occurrence::class,
+            'created_by'
+        );
+    }
+
+    public function assignedOccurrences(): HasMany
+    {
+        return $this->hasMany(
+            Occurrence::class,
+            'assigned_user_id'
+        );
+    }
 }

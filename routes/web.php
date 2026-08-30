@@ -6,11 +6,12 @@ use App\Http\Controllers\SectorController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\FirstLoginPasswordController;
 use App\Http\Controllers\TotemInspectionController;
-
+use App\Http\Controllers\OccurrenceController;
 
 Route::get('/', function () {
     return view('welcome');
 });
+
 
 Route::middleware('auth')->group(function () {
 
@@ -34,13 +35,24 @@ Route::get('/dashboard', function () {
     'password.changed',
 ])->name('dashboard');
 
-Route::get('/ocorrencias', function () {
-    return view('occurrences.index');
-})->middleware([
-    'auth',
-    'verified',
-    'password.changed',
-])->name('occurrences.index');
+Route::middleware(['auth', 'password.changed'])->group(function () {
+    Route::resource('/occurrences', OccurrenceController::class);
+});
+
+Route::patch(
+    '/occurrences/{occurrence}/start',
+    [OccurrenceController::class, 'start']
+)->name('occurrences.start');
+
+Route::patch(
+    '/occurrences/{occurrence}/resolve',
+    [OccurrenceController::class, 'resolve']
+)->name('occurrences.resolve');
+
+Route::patch(
+    '/occurrences/{occurrence}/close',
+    [OccurrenceController::class, 'close']
+)->name('occurrences.close');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

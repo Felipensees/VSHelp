@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Models\InspectionSection;
 use App\Models\InspectionItem;
+use App\Models\User;
 
 class TotemInspectionController extends Controller
 {
@@ -55,22 +56,58 @@ class TotemInspectionController extends Controller
     }
 
     public function index(Request $request)
-    {
-        $user = auth()->user();
+{
+    $user = auth()->user();
 
-        $query = TotemInspection::with('creator')
-            ->latest();
+    $query = TotemInspection::with('creator');
 
-        if ($user->role !== 'super_admin') {
-            $query->where('created_by', $user->id);
-        }
-
-        $totemInspections = $query
-            ->paginate(10)
-            ->withQueryString();
-
-        return view('totem-inspections.index', compact('totemInspections'));
+    if ($user->role !== 'super_admin') {
+        $query->where('created_by', $user->id);
     }
+
+    if ($request->filled('order_number')) {
+        $query->where(
+            'order_number',
+            'like',
+            '%' . $request->order_number . '%'
+        );
+    }
+
+    if ($request->filled('serial_number')) {
+        $query->where(
+            'serial_number',
+            'like',
+            '%' . $request->serial_number . '%'
+        );
+    }
+
+    if ($request->filled('status')) {
+        $query->where('status', $request->status);
+    }
+
+    if (
+        $user->role === 'super_admin'
+        && $request->filled('created_by')
+    ) {
+        $query->where('created_by', $request->created_by);
+    }
+
+    $totemInspections = $query
+        ->latest()
+        ->paginate(10)
+        ->withQueryString();
+
+    $users = collect();
+
+    if ($user->role === 'super_admin') {
+        $users = User::orderBy('name')->get();
+    }
+
+    return view('totem-inspections.index', compact(
+        'totemInspections',
+        'users'
+    ));
+}
 
     public function show(TotemInspection $totemInspection)
     {
