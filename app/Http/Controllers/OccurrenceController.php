@@ -6,15 +6,18 @@ use App\Models\Occurrence;
 use App\Models\Sector;
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Models\OccurrenceHistory;
 
 class OccurrenceController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
 {
     $user = auth()->user();
+
+    $tab = $request->get('tab', 'progress');
 
     $query = Occurrence::with([
         'creator',
@@ -22,15 +25,33 @@ class OccurrenceController extends Controller
         'assignedUser',
     ]);
 
+    // Super Admin vê todas.
+    // Usuário comum vê somente as atribuídas a ele.
     if ($user->role !== 'super_admin') {
         $query->where('assigned_user_id', $user->id);
     }
 
+    if ($tab === 'finished') {
+        $query->whereIn('status', [
+            'resolved',
+            'closed',
+        ]);
+    } else {
+        $query->whereIn('status', [
+            'open',
+            'in_progress',
+        ]);
+    }
+
     $occurrences = $query
         ->latest()
-        ->get();
+        ->paginate(10)
+        ->withQueryString();
 
-    return view('occurrences.index', compact('occurrences'));
+    return view('occurrences.index', compact(
+        'occurrences',
+        'tab'
+    ));
 }
 
     /**
@@ -139,4 +160,122 @@ class OccurrenceController extends Controller
     {
         //
     }
+
+    public function start(Occurrence $occurrence)
+{
+    if (
+        auth()->user()->role !== 'super_admin'
+        && $occurrence->assigned_user_id !== auth()->id()
+    ) {
+        abort(403);
+    }
+
+    if ($occurrence->status !== 'open') {
+        return back()->with(
+            'error',
+            'Esta ocorrência não pode ser iniciada.'
+        );
+    }
+
+    $oldStatus = $occurrence->status;
+
+    $occurrence->update([
+        'status' => 'in_progress',
+        'started_at' => now(),
+    ]);
+
+    OccurrenceHistory::create([
+        'occurrence_id' => $occurrence->id,
+        'user_id' => auth()->id(),
+        'action' => 'status_changed',
+        'from_status' => $oldStatus,
+        'to_status' => 'in_progress',
+        'description' => 'Atendimento iniciado.',
+    ]);
+
+    return back()->with(
+        'success',
+        'Atendimento iniciado com sucesso.'
+    );
+}
+
+public function resolve(Occurrence $occurrence)
+{
+    if (
+        auth()->user()->role !== 'super_admin'
+        && $occurrence->assigned_user_id !== auth()->id()
+    ) {
+        abort(403);
+    }
+
+    if ($occurrence->status !== 'in_progress') {
+        return back()->with(
+            'error',
+            'Esta ocorrência não pode ser marcada como resolvida.'
+        );
+    }
+
+    $oldStatus = $occurrence->status;
+
+    $occurrence->update([
+        'status' => 'resolved',
+        'resolved_at' => now(),
+    ]);
+
+    OccurrenceHistory::create([
+        'occurrence_id' => $occurrence->id,
+        'user_id' => auth()->id(),
+        'action' => 'status_changed',
+        'from_status' => $oldStatus,
+        'to_status' => 'resolved',
+        'description' => 'Ocorrência marcada como resolvida.',
+    ]);
+
+    return back()->with(
+        'success',
+        'Ocorrência marcada como resolvida.'
+    );
+}
+
+public function close(Occurrence $occurrence)
+{
+    $user = auth()->user();
+
+    if (
+        $user->role !== 'super_admin'
+        && $occurrence->created_by !== $user->id
+    ) {
+        abort(403);
+    }
+
+    if ($occurrence->status !== 'resolved') {
+        return back()->with(
+            'error',
+            'A ocorrência precisa estar resolvida antes de ser encerrada.'
+        );
+    }
+
+    $oldStatus = $occurrence->status;
+
+    $occurrence->update([
+        'status' => 'closed',
+        'closed_at' => now(),
+    ]);
+
+    OccurrenceHistory::create([
+        'occurrence_id' => $occurrence->id,
+        'user_id' => auth()->id(),
+        'action' => 'status_changed',
+        'from_status' => $oldStatus,
+        'to_status' => 'closed',
+        'description' => 'Ocorrência encerrada.',
+    ]);
+
+    return back()->with(
+        'success',
+        'Ocorrência encerrada com sucesso.'
+    );
+}
+
+
 }

@@ -38,6 +38,21 @@ Route::middleware(['auth', 'password.changed'])->group(function () {
     Route::resource('/occurrences', OccurrenceController::class);
 });
 
+Route::patch(
+    '/occurrences/{occurrence}/start',
+    [OccurrenceController::class, 'start']
+)->name('occurrences.start');
+
+Route::patch(
+    '/occurrences/{occurrence}/resolve',
+    [OccurrenceController::class, 'resolve']
+)->name('occurrences.resolve');
+
+Route::patch(
+    '/occurrences/{occurrence}/close',
+    [OccurrenceController::class, 'close']
+)->name('occurrences.close');
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
