@@ -7,6 +7,9 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\FirstLoginPasswordController;
 use App\Http\Controllers\TotemInspectionController;
 use App\Http\Controllers\OccurrenceController;
+use App\Http\Controllers\AccessScriptController;
+use App\Services\GoogleDriveService;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -35,6 +38,7 @@ Route::get('/dashboard', function () {
     'password.changed',
 ])->name('dashboard');
 
+// Rotas para ocorrências
 Route::middleware(['auth', 'password.changed'])->group(function () {
     Route::resource('/occurrences', OccurrenceController::class);
 });
@@ -74,6 +78,7 @@ Route::middleware(['auth', 'password.changed', 'superadmin'])->group(function ()
         ->except(['show']);
 });
 
+// Rotas para inspeções de totens
 Route::middleware(['auth', 'password.changed'])->group(function () {
     Route::get('/totens', [TotemInspectionController::class, 'index'])
         ->name('totem-inspections.index');
@@ -96,5 +101,33 @@ Route::middleware(['auth', 'password.changed'])->group(function () {
     '/totens/{totemInspection}/finalizar',
     [TotemInspectionController::class, 'finalize']
     )->name('totem-inspections.finalize');
+});
+// Rotas para buscar PDFs de inspeções de totens no Google Drive
+Route::get('/totens/buscar-pdf/{pedido}', function (
+    string $pedido,
+    \App\Services\GoogleDriveService $googleDriveService
+) {
+    $pdf = $googleDriveService->findPdfByOrder($pedido);
+
+    if (! $pdf) {
+        return response()->json([
+            'found' => false,
+        ]);
+    }
+
+    return response()->json([
+        'found' => true,
+        'file' => $pdf,
+    ]);
+})
+    ->middleware(['auth', 'password.changed'])
+    ->name('totem-inspections.search-pdf');
+
+// Rota gerador de script de acesso para implantação de totens.
+Route::middleware(['auth', 'password.changed'])->group(function () {
+
+    Route::get('/gerador-acesso', [AccessScriptController::class, 'index'])
+        ->name('access-script.index');
+
 });
 require __DIR__.'/auth.php';

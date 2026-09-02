@@ -46,12 +46,42 @@
                 </div>
 
                 @else
-                <div class="p-6 border-b border-gray-200">
+                @php
+                    $activeFilters = collect([
+                        request('order_number'), request('serial_number'),
+                        request('inspection_date'), request('status'), request('created_by'),
+                    ])->filter(fn ($value) => filled($value))->count();
+                @endphp
+
+                <div x-data="{ filtersOpen: {{ $activeFilters > 0 ? 'true' : 'false' }} }"
+                    class="border-b border-slate-200 bg-slate-50/70 p-4 sm:p-6">
+                    <div class="flex flex-wrap items-center justify-between gap-3">
+                        <div>
+                            <h3 class="text-sm font-semibold text-slate-900">Filtros de busca</h3>
+                            <p class="mt-0.5 text-xs text-slate-500">Refine a lista de inspeções de totens.</p>
+                        </div>
+
+                        <button type="button" @click="filtersOpen = ! filtersOpen" :aria-expanded="filtersOpen"
+                            class="inline-flex items-center gap-2 rounded-xl border border-indigo-200 bg-white px-4 py-2.5 text-sm font-semibold text-indigo-700 shadow-sm transition hover:border-indigo-300 hover:bg-indigo-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3.75 5.25h16.5M6.75 12h10.5m-7.5 6.75h4.5" />
+                            </svg>
+                            <span x-text="filtersOpen ? 'Ocultar filtros' : 'Filtrar inspeções'"></span>
+                            @if ($activeFilters > 0)
+                                <span class="inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-indigo-600 px-1.5 text-xs text-white">{{ $activeFilters }}</span>
+                            @endif
+                            <svg class="h-4 w-4 transition-transform" :class="filtersOpen && 'rotate-180'" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m6 9 6 6 6-6" />
+                            </svg>
+                        </button>
+                    </div>
 
                     <form
+                        x-show="filtersOpen"
+                        x-transition
                         method="GET"
                         action="{{ route('totem-inspections.index') }}"
-                        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+                        class="mt-5 grid grid-cols-1 gap-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm md:grid-cols-2 lg:grid-cols-6 sm:p-5">
 
                         {{-- Pedido --}}
                         <div>
@@ -85,6 +115,23 @@
                                 name="serial_number"
                                 value="{{ request('serial_number') }}"
                                 placeholder="Buscar serial"
+                                class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                        </div>
+
+
+                        {{-- Data da inspeção --}}
+                        <div>
+                            <label
+                                for="inspection_date"
+                                class="block text-sm font-medium text-gray-700 mb-1">
+                                Data
+                            </label>
+
+                            <input
+                                id="inspection_date"
+                                type="date"
+                                name="inspection_date"
+                                value="{{ request('inspection_date') }}"
                                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                         </div>
 
@@ -160,13 +207,13 @@
 
                             <button
                                 type="submit"
-                                class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700">
+                                class="inline-flex flex-1 items-center justify-center rounded-xl bg-indigo-600 px-4 py-2.5 font-semibold text-white shadow-sm transition hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                                 Filtrar
                             </button>
 
                             <a
                                 href="{{ route('totem-inspections.index') }}"
-                                class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50">
+                                class="inline-flex flex-1 items-center justify-center rounded-xl border border-slate-300 bg-white px-4 py-2.5 font-semibold text-slate-700 transition hover:bg-slate-50">
                                 Limpar
                             </a>
 

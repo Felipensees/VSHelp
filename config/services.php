@@ -34,5 +34,11 @@ return [
             'channel' => env('SLACK_BOT_USER_DEFAULT_CHANNEL'),
         ],
     ],
-
+    'google_drive' => [
+        'folder_id' => env('GOOGLE_DRIVE_FOLDER_ID'),
+        'service_account_path' => env(
+            'GOOGLE_SERVICE_ACCOUNT_PATH',
+            'storage/app/google/service-account.json'
+        ),
+    ],
 ];

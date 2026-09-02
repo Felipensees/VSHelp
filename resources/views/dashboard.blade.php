@@ -33,6 +33,15 @@
                     <p class="mt-2 text-sm leading-6 text-slate-500">Inicie uma inspeção ou consulte os totens já verificados.</p>
                     <span class="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-indigo-600">Acessar totens <span class="transition group-hover:translate-x-1">→</span></span>
                 </a>
+
+                <a href="{{ route('access-script.index') }}" class="group rounded-2xl border border-slate-200 bg-white p-7 shadow-sm transition hover:-translate-y-1 hover:border-emerald-200 hover:shadow-xl">
+                    <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-emerald-50 text-emerald-600 transition group-hover:bg-emerald-600 group-hover:text-white">
+                        <svg class="h-7 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M15.75 5.25a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.5 20.1a7.5 7.5 0 0115 0 17.9 17.9 0 01-15 0zM18 8.25h4.5m-2.25-2.25v4.5"/></svg>
+                    </div>
+                    <h3 class="mt-6 text-xl font-bold text-slate-900">Gerador de Acesso</h3>
+                    <p class="mt-2 text-sm leading-6 text-slate-500">Gere rapidamente as informações de acesso para implantação.</p>
+                    <span class="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-emerald-600">Acessar gerador <span class="transition group-hover:translate-x-1">→</span></span>
+                </a>
             </div>
         </div>
     </div>

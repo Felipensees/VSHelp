@@ -102,6 +102,26 @@
             </div>
 
 
+            {{-- PDF do pedido --}}
+            <div class="overflow-hidden border border-slate-200 bg-white shadow-sm sm:rounded-2xl">
+                <div class="flex flex-col gap-3 p-6 sm:flex-row sm:items-center sm:justify-between sm:p-8">
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-900">PDF do pedido</h3>
+                        <p class="mt-1 text-sm text-gray-500">
+                            Documento encontrado no Google Drive para o pedido {{ $totemInspection->order_number }}.
+                        </p>
+                    </div>
+
+                    <div
+                        id="inspection-pdf"
+                        data-search-url="{{ route('totem-inspections.search-pdf', ['pedido' => $totemInspection->order_number]) }}"
+                        class="text-sm text-gray-500">
+                        Buscando PDF...
+                    </div>
+                </div>
+            </div>
+
+
             {{-- Checklist --}}
             <div class="overflow-hidden border border-slate-200 bg-white shadow-sm sm:rounded-2xl">
 
@@ -245,4 +265,41 @@
 
     </div>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const pdfContainer = document.getElementById('inspection-pdf');
+
+            try {
+                const response = await fetch(pdfContainer.dataset.searchUrl, {
+                    headers: { 'Accept': 'application/json' },
+                });
+
+                if (!response.ok) {
+                    throw new Error('Erro ao consultar PDF');
+                }
+
+                const data = await response.json();
+
+                if (!data.found) {
+                    pdfContainer.textContent = 'Nenhum PDF encontrado para este pedido.';
+                    pdfContainer.className = 'text-sm font-medium text-amber-700';
+                    return;
+                }
+
+                const link = document.createElement('a');
+                link.href = data.file.web_view_link;
+                link.target = '_blank';
+                link.rel = 'noopener noreferrer';
+                link.className = 'inline-flex items-center rounded-lg bg-indigo-600 px-4 py-2.5 font-semibold text-white shadow-sm transition hover:bg-indigo-700';
+                link.textContent = 'Abrir PDF do pedido';
+
+                pdfContainer.replaceChildren(link);
+                pdfContainer.className = '';
+            } catch (error) {
+                pdfContainer.textContent = 'Não foi possível consultar o PDF.';
+                pdfContainer.className = 'text-sm font-medium text-red-600';
+                console.error(error);
+            }
+        });
+    </script>
 </x-app-layout>

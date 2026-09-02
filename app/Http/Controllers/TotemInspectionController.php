@@ -85,6 +85,10 @@ class TotemInspectionController extends Controller
         $query->where('status', $request->status);
     }
 
+    if ($request->filled('inspection_date')) {
+        $query->whereDate('created_at', $request->inspection_date);
+    }
+
     if (
         $user->role === 'super_admin'
         && $request->filled('created_by')
